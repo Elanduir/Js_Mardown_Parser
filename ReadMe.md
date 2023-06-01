@@ -1,20 +1,33 @@
-'# Test H1\n## Test H2\n### Test H3'
+# Markdown Parser
 
-"# Test H1\n## Test H2\n### Test H3\n1. test\n2. test\n- hans\n- test"
+### Written in Javascript
 
-1. test
-   - test
-   - hans
-2. alles
+---
 
-iwas anders
+### Features
 
-![test](https://media.istockphoto.com/id/828156368/photo/demo.jpg?s=612x612&w=0&k=20&c=JIREJlrI5vY33-hLNn8vz_GREOoTIFLfSsOSkgYJ_ms=)
+#### Lists
 
-- nuss
-  1. brot
-- wasser
+1. Ordered
+   - unordered
+   - nested
+2. list end
 
-| test |     | t   |
-| ---- | --- | --- |
-| hans | t   |     |
+#### Images
+
+![test](https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png)
+
+#### Hyperlinks
+
+This is a hyperlink: [https://github.com/Elanduir/Js_Markdown_Parser](https://github.com/Elanduir/Js_Markdown_Parser);
+
+#### Basic Tables
+
+| Column1 | Column2 | Column3 |
+| ------- | ------- | ------- |
+| value   | value   | value   |
+| value   | value   | value   |
+
+### Horizontal line
+
+---
