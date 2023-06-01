@@ -13,7 +13,7 @@ body {
 }
 
 #parsedRoot {
-  margin: 100px;
+  margin: 3em;
   border: 1px solid #30363d;
   border-radius: 0.5em;
   width: min(95vw, 60em);
