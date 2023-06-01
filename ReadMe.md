@@ -19,7 +19,7 @@
 
 #### Hyperlinks
 
-This is a hyperlink: [https://github.com/Elanduir/Js_Markdown_Parser](https://github.com/Elanduir/Js_Markdown_Parser);
+This is a hyperlink: [https://github.com/Elanduir/Js_Markdown_Parser](https://github.com/Elanduir/Js_Markdown_Parser)
 
 #### Basic Tables
 

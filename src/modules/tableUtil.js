@@ -8,7 +8,6 @@ const parseTables = (text) => {
   while ((match = TABLE_REGEX.exec(text))) {
     [m, code] = convertTables(match);
     text = text.replace(m, code);
-    console.log(text);
   }
   return text;
 };

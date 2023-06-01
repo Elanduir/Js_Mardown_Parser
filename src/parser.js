@@ -13,13 +13,14 @@ import { projectHTML } from "./modules/projector.js";
 import { parseTables } from "./modules/tableUtil.js";
 
 const brReg = /\n\n/gi;
-const hrReg = /^((-){3,}|(=){3,})$/gi;
+const hrReg = /(^(-){3,}|(=){3,})/gim;
 
 const Parse = (text) => {
   let parsedLines = [];
 
   text = text.replaceAll(brReg, "\n<br>\n");
   text = text.replaceAll(hrReg, "<hr>");
+  console.log(text);
   text = parseCode(text);
   text = parseImages(text);
   text = parseHyperlinks(text);
@@ -32,9 +33,7 @@ const Parse = (text) => {
 
   allLines.forEach((line) => {
     let pL = parseLine(line);
-    if (pL.length !== 0) {
-      parsedLines.push(pL);
-    }
+    parsedLines.push(pL);
   });
 
   listHtml.forEach((html) => parsedLines.splice(html[0], 0, html[1]));
@@ -43,12 +42,13 @@ const Parse = (text) => {
 
 const parseLine = (line) => {
   if (line.length === 0) return "";
+  line = line.trimStart();
   let splitLine = line.split(" ");
   let mod = splitLine[0];
   switch (true) {
     case ulReg.test(line) || olReg.test(line):
       break;
-    case mod.charAt(0) === "#":
+    case mod.trim().charAt(0) === "#":
       return header(splitLine.slice(1).join(" "), mod.length);
     case line === "<br>":
       return "";
