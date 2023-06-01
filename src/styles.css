@@ -1,4 +1,8 @@
 body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans",
+    Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  background-color: #0d1117;
+  color: #e6edf3;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -6,11 +10,19 @@ body {
 }
 
 #parsedRoot {
-  outline: 1px solid black;
+  border: 1px solid #30363d;
+  border-radius: 0.5em;
+  width: 60vw;
 }
 
 table,
 th,
 td {
-  border: 1px solid black;
+  border: 1px solid #30363d;
+}
+
+hr {
+  background-color: #30363d;
+  border: 0;
+  height: 0.25em;
 }
