@@ -28,6 +28,6 @@ This is a hyperlink: [https://github.com/Elanduir/Js_Markdown_Parser](https://gi
 | value   | value   | value   |
 | value   | value   | value   |
 
-### Horizontal line
+#### Horizontal line
 
 ---
