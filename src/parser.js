@@ -1,85 +1,65 @@
+export { Parse };
+
+import { parseCode } from "./modules/codeUtil.js";
+import { parseHyperlinks } from "./modules/hyperlinkUtil.js";
+import { parseImages } from "./modules/imageUtil.js";
+import {
+  extractAllLists,
+  parseLists,
+  ulReg,
+  olReg,
+} from "./modules/listUtil.js";
 import { projectHTML } from "./modules/projector.js";
+import { parseTables } from "./modules/tableUtil.js";
 
-const SAMPLE =
-  "# Test H1\n## Test H2\n### Test H3\n1. test\n2. test\n- hans\n- test";
+const brReg = /\n\n/gi;
+const hrReg = /^((-){3,}|(=){3,})$/gi;
 
-const projector = projectHTML;
-
-let ul = [];
-let ol = [];
-
-const parse = (text) => {
+const Parse = (text) => {
   let parsedLines = [];
-  text.split("\n").forEach((l, i) => parsedLines.push(parseLine(l, i)));
-  handleList().forEach((list) => parsedLines.splice(list[0], 0, list[1]));
+
+  text = text.replaceAll(brReg, "\n<br>\n");
+  text = text.replaceAll(hrReg, "<hr>");
+  text = parseCode(text);
+  text = parseImages(text);
+  text = parseHyperlinks(text);
+  text = parseTables(text);
+
+  let allLines = text.split(/\n/);
+  let extract = extractAllLists(allLines);
+  allLines = extract[0].join(" ").split("<br>");
+  let listHtml = parseLists(extract[1]);
+
+  allLines.forEach((line) => {
+    let pL = parseLine(line);
+    if (pL.length !== 0) {
+      parsedLines.push(pL);
+    }
+  });
+
+  listHtml.forEach((html) => parsedLines.splice(html[0], 0, html[1]));
   return parsedLines.join("\n");
 };
 
-const parseLine = (line, i) => {
+const parseLine = (line) => {
+  if (line.length === 0) return "";
   let splitLine = line.split(" ");
   let mod = splitLine[0];
   switch (true) {
+    case ulReg.test(line) || olReg.test(line):
+      break;
     case mod.charAt(0) === "#":
       return header(splitLine.slice(1).join(" "), mod.length);
-    case mod.charAt(0) === "-":
-      ul.push([i, listItem(splitLine.slice(1).join(" "), "unordered")]);
-      break;
-    case /[1-9]+\./.test(mod):
-      ol.push([i, listItem(splitLine.slice(1).join(" "), "ordered")]);
-      break;
+    case line === "<br>":
+      return "";
     default:
       return paragraph(line);
   }
 };
 
-const handleList = () => {
-  let lists = [];
-  let cache = [];
-
-  let fInd = ul[0][0];
-  let pInd = fInd;
-  for (let i = 0; i < ul.length; i++) {
-    if (ul[i][0] - pInd > 1) {
-      lists.push([fInd, "<ul>" + cache.join("") + "</ul>"]);
-      cache = [];
-      fInd = ul[i][0];
-      pInd = fInd;
-    } else {
-      pInd = ul[i][0];
-    }
-    cache.push(ul[i][1]);
-  }
-  lists.push([fInd, "<ul>" + cache.join("") + "</ul>"]);
-  cache = [];
-
-  fInd = ol[0][0];
-  pInd = fInd;
-  for (let i = 0; i < ol.length; i++) {
-    if (ol[i][0] - pInd > 1) {
-      lists.push([fInd, "<ol>" + cache.join("") + "</ol>"]);
-      cache = [];
-      fInd = ol[i][0];
-      pInd = fInd;
-    } else {
-      pInd = ol[i][0];
-    }
-    cache.push(ol[i][1]);
-  }
-  lists.push([fInd, "<ol>" + cache.join("") + "</ol>"]);
-  return lists;
-};
-
 const header = (text, n) => `<h${n}>${text}</h${n}>`;
 
-const listItem = (text, type) => `<li class="${type}">${text}</li>`;
-
-const htmlElement = (text, type) => `<${type}>${text}</${type}>`;
+const htmlElement = (text, type, cls) =>
+  `<${type}${cls ? `class="${cls}"` : ""}>${text}</${type}>`;
 
 const paragraph = (text) => `<p>${text}</p>`;
-
-const setup = () => {
-  let parsed = parse(SAMPLE);
-  projector("parsedRoot", parsed);
-};
-
-setup();

@@ -1,10 +1,16 @@
 body {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 #parsedRoot {
-    outline: 1px solid black;
+  outline: 1px solid black;
+}
+
+table,
+th,
+td {
+  border: 1px solid black;
 }
