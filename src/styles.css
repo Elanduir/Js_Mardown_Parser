@@ -26,3 +26,8 @@ hr {
   border: 0;
   height: 0.25em;
 }
+
+img {
+  max-width: 59vw;
+  height: auto;
+}
