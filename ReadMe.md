@@ -20,6 +20,7 @@
 #### Hyperlinks
 
 This is a hyperlink: [https://github.com/Elanduir/Js_Markdown_Parser](https://github.com/Elanduir/Js_Markdown_Parser)
+This is a test Recipe: [./testRecipe/scampi_fettucine.html](./testRecipe/scampi_fettucine.html)
 
 #### Basic Tables
 
